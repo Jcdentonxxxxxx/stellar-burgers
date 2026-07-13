@@ -1,5 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { userSlice, ingredientsSlice, burgerConstructorSlice } from '@slices';
+import {
+  userSlice,
+  ingredientsSlice,
+  burgerConstructorSlice,
+  feedsOrdersSlice
+} from '@slices';
 import { combineSlices } from '@reduxjs/toolkit';
 
 import {
@@ -11,7 +16,8 @@ import {
 const rootReducer = combineSlices(
   userSlice,
   ingredientsSlice,
-  burgerConstructorSlice
+  burgerConstructorSlice,
+  feedsOrdersSlice
 );
 
 const store = configureStore({

@@ -21,15 +21,17 @@ import {
   ProtectedRoute,
   OrderInfo,
   IngredientDetails,
-  Modal
+  Modal,
+  WrapperRouter
 } from '@components';
 
-import { useDispatch } from '../../services/store';
+import { useDispatch } from '@store';
 import { fetchIngredients } from '@slices';
 
 const App = () => {
   const location = useLocation();
   const background = location.state?.background;
+  const numberOrder = location.pathname.match(/\d+/)?.[0];
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -45,6 +47,15 @@ const App = () => {
       <Routes location={background || location}>
         <Route path='/' element={<ConstructorPage />} />
         <Route path='/feed' element={<Feed />} />
+
+        <Route
+          path='/feed/:number'
+          element={
+            <WrapperRouter title={`#${numberOrder}`}>
+              <OrderInfo />
+            </WrapperRouter>
+          }
+        />
         <Route path='/ingredients/:id' element={<IngredientDetails />} />
 
         <Route element={<ProtectedRoute onlyUnAuth />}>
@@ -69,7 +80,7 @@ const App = () => {
           <Route
             path='/feed/:number'
             element={
-              <Modal title='Детали ингредиента' onClose={() => navigate(-1)}>
+              <Modal title={`#${numberOrder}`} onClose={() => navigate(-1)}>
                 <OrderInfo />
               </Modal>
             }

@@ -1,0 +1,12 @@
+.title {
+  font-family: Iceland;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 24px;
+  text-align: center;
+}
+
+.wrapper {
+  padding-top: 100px;
+}

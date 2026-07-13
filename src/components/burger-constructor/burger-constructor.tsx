@@ -1,12 +1,14 @@
 import { FC, useMemo } from 'react';
 import { TConstructorIngredient } from '@utils-types';
 import { BurgerConstructorUI } from '@ui';
-import { useSelector } from '../../services/store';
+import { useSelector, useDispatch } from '@store';
 import { getStateBurgerConstructor } from '@selectors';
+import { resetConstructor } from '@slices';
 
 export const BurgerConstructor: FC = () => {
   /** TODO: взять переменные constructorItems, orderRequest и orderModalData из стора */
-  const { constructorItems } = useSelector(getStateBurgerConstructor);
+  const constructorItems = useSelector(getStateBurgerConstructor);
+  const dispatch = useDispatch();
 
   const orderRequest = false;
 
@@ -15,7 +17,9 @@ export const BurgerConstructor: FC = () => {
   const onOrderClick = () => {
     if (!constructorItems.bun || orderRequest) return;
   };
-  const closeOrderModal = () => {};
+  const closeOrderModal = () => {
+    dispatch(resetConstructor());
+  };
 
   const price = useMemo(
     () =>

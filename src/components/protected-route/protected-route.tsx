@@ -1,4 +1,4 @@
-import { useSelector } from '../../services/store';
+import { useSelector } from '@store';
 
 import { isAuthCheckedSelector, userDataSelector } from '@selectors';
 import { Navigate, useLocation, Outlet } from 'react-router';
