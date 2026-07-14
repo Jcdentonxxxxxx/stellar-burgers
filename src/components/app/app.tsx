@@ -26,7 +26,7 @@ import {
 } from '@components';
 
 import { useDispatch } from '@store';
-import { fetchIngredients } from '@slices';
+import { fetchIngredients, checkUserAuth } from '@slices';
 
 const App = () => {
   const location = useLocation();
@@ -38,7 +38,8 @@ const App = () => {
 
   useEffect(() => {
     dispatch(fetchIngredients());
-  }, [dispatch]);
+    dispatch(checkUserAuth());
+  }, []);
 
   return (
     <div className={styles.app}>
@@ -56,7 +57,14 @@ const App = () => {
             </WrapperRouter>
           }
         />
-        <Route path='/ingredients/:id' element={<IngredientDetails />} />
+        <Route
+          path='/ingredients/:id'
+          element={
+            <WrapperRouter title={'Детали ингредиента'} largeText>
+              <IngredientDetails />
+            </WrapperRouter>
+          }
+        />
 
         <Route element={<ProtectedRoute onlyUnAuth />}>
           <Route path='/login' element={<Login />} />

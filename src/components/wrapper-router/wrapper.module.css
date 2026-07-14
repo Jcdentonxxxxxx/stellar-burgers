@@ -9,4 +9,14 @@
 
 .wrapper {
   padding-top: 100px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.text_type_main_large {
+  font-family: 'Jet Brains Mono';
+    font-size: 36px;
+    font-weight: bold;
+    line-height: 1.1;
 }
