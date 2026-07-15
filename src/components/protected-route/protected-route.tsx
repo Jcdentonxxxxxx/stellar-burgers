@@ -34,5 +34,5 @@ export const ProtectedRoute = ({
     return <Navigate replace to={from} />;
   }
 
-  return <Outlet />;
+  return children ? children : <Outlet />;
 };

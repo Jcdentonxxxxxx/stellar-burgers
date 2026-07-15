@@ -73,7 +73,7 @@ const App = () => {
           <Route path='/reset-password' element={<ResetPassword />} />
         </Route>
 
-        <Route element={<ProtectedRoute onlyAuth />}>
+        <Route element={<ProtectedRoute />}>
           <Route path='/profile' element={<Profile />} />
           <Route path='/profile/orders' element={<ProfileOrders />} />
           <Route path='/profile/orders/:number' element={<OrderInfo />} />
@@ -101,16 +101,16 @@ const App = () => {
               </Modal>
             }
           />
-          {/* <Route
+          <Route
             path='/profile/orders/:number'
             element={
-              <Modal title='Детали ингредиента' onClose={() => navigate(-1)}>
-                <ProtectedRoute onlyAuth>
+              <ProtectedRoute>
+                <Modal title={`#${numberOrder}`} onClose={() => navigate(-1)}>
                   <OrderInfo />
-                </ProtectedRoute>
-              </Modal>
+                </Modal>
+              </ProtectedRoute>
             }
-          /> */}
+          />
         </Routes>
       )}
     </div>
