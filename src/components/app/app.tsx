@@ -41,6 +41,10 @@ const App = () => {
     dispatch(checkUserAuth());
   }, []);
 
+  const handleModalClose = () => {
+    navigate(-1);
+  };
+
   return (
     <div className={styles.app}>
       <AppHeader />
@@ -123,14 +127,6 @@ const App = () => {
             </ProtectedRoute>
           }
         />
-        <Route
-          path='/reset-password'
-          element={
-            <ProtectedRoute>
-              <ResetPassword />
-            </ProtectedRoute>
-          }
-        />
 
         <Route path='*' element={<NotFound404 />} />
       </Routes>
@@ -140,7 +136,7 @@ const App = () => {
           <Route
             path='/feed/:number'
             element={
-              <Modal title={`#${numberOrder}`} onClose={() => navigate(-1)}>
+              <Modal title={`#${numberOrder}`} onClose={handleModalClose}>
                 <OrderInfo />
               </Modal>
             }
@@ -148,7 +144,7 @@ const App = () => {
           <Route
             path='/ingredients/:id'
             element={
-              <Modal title='Детали ингредиента' onClose={() => navigate(-1)}>
+              <Modal title='Детали ингредиента' onClose={handleModalClose}>
                 <IngredientDetails />
               </Modal>
             }
@@ -157,7 +153,7 @@ const App = () => {
             path='/profile/orders/:number'
             element={
               <ProtectedRoute>
-                <Modal title={`#${numberOrder}`} onClose={() => navigate(-1)}>
+                <Modal title={`#${numberOrder}`} onClose={handleModalClose}>
                   <OrderInfo />
                 </Modal>
               </ProtectedRoute>

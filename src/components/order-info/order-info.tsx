@@ -15,7 +15,7 @@ export const OrderInfo: FC = () => {
   useEffect(() => {
     if (!number) return;
     dispatch(fetchNumberOrder(Number(number)));
-  }, []);
+  }, [number]);
 
   const orderData = useSelector(getOrderByNumber)[0];
 
