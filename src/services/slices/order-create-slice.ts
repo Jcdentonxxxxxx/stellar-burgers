@@ -4,12 +4,14 @@ import { orderBurgerApi, getOrdersApi } from '@api';
 
 interface IOrderState {
   orderRequest: boolean;
+  ordersIsGetting: boolean;
   orderModalData: TOrder | null;
   ordersByUser: TOrder[];
 }
 
 const initialState: IOrderState = {
   orderRequest: false,
+  ordersIsGetting: false,
   orderModalData: null,
   ordersByUser: []
 };
@@ -59,14 +61,14 @@ export const orderSlice = createSlice({
       })
 
       .addCase(fetchOrdersByUser.pending, (state) => {
-        state.orderRequest = true;
+        state.ordersIsGetting = true;
       })
       .addCase(fetchOrdersByUser.fulfilled, (state, action) => {
         state.ordersByUser = action.payload;
-        state.orderRequest = false;
+        state.ordersIsGetting = false;
       })
       .addCase(fetchOrdersByUser.rejected, (state, action) => {
-        state.orderRequest = false;
+        state.ordersIsGetting = false;
       });
   }
 });

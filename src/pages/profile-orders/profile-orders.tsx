@@ -5,7 +5,7 @@ import { useDispatch } from '@store';
 import { fetchOrdersByUser } from '@slices';
 import { useSelector } from '@store';
 
-import { getOrdersByUser, getOrderRequest } from '@selectors';
+import { getOrdersByUser, getOrdersGettingStatus } from '@selectors';
 import { Preloader } from '@ui';
 
 export const ProfileOrders: FC = () => {
@@ -15,9 +15,9 @@ export const ProfileOrders: FC = () => {
   }, [dispatch]);
 
   const orders: TOrder[] = useSelector(getOrdersByUser);
-  const orderRequest = useSelector(getOrderRequest);
+  const ordersIsGetting = useSelector(getOrdersGettingStatus);
 
-  if (orderRequest) {
+  if (ordersIsGetting) {
     return <Preloader />;
   }
 

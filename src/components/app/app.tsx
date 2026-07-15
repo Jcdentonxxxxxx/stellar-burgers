@@ -31,7 +31,6 @@ import { fetchIngredients, checkUserAuth } from '@slices';
 const App = () => {
   const location = useLocation();
   const background = location.state?.background;
-  const numberOrder = location.pathname.match(/\d+/)?.[0];
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -56,7 +55,7 @@ const App = () => {
         <Route
           path='/feed/:number'
           element={
-            <WrapperRouter title={`#${numberOrder}`}>
+            <WrapperRouter title=''>
               <OrderInfo />
             </WrapperRouter>
           }
@@ -136,7 +135,7 @@ const App = () => {
           <Route
             path='/feed/:number'
             element={
-              <Modal title={`#${numberOrder}`} onClose={handleModalClose}>
+              <Modal title='' onClose={handleModalClose}>
                 <OrderInfo />
               </Modal>
             }
@@ -153,7 +152,7 @@ const App = () => {
             path='/profile/orders/:number'
             element={
               <ProtectedRoute>
-                <Modal title={`#${numberOrder}`} onClose={handleModalClose}>
+                <Modal title='' onClose={handleModalClose}>
                   <OrderInfo />
                 </Modal>
               </ProtectedRoute>
