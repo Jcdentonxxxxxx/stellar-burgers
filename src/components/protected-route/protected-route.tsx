@@ -13,7 +13,6 @@ type ProtectedRouteProps = {
 
 export const ProtectedRoute = ({
   onlyUnAuth,
-  onlyAuth,
   children
 }: ProtectedRouteProps) => {
   const isAuthChecked = useSelector(isAuthCheckedSelector);
@@ -34,5 +33,5 @@ export const ProtectedRoute = ({
     return <Navigate replace to={from} />;
   }
 
-  return children ? children : <Outlet />;
+  return children;
 };

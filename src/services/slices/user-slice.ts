@@ -165,10 +165,10 @@ export const userSlice = createSlice({
         state.data = action.payload;
       })
 
-      .addCase(updateUser.pending, (state, action) => {
+      .addCase(updateUser.pending, (state) => {
         state.updateUserError = '';
       })
-      .addCase(updateUser.rejected, (state, action) => {
+      .addCase(updateUser.rejected, (state) => {
         state.updateUserError = 'Произошла ошибка обновления данных';
       })
       .addCase(updateUser.fulfilled, (state, action) => {
