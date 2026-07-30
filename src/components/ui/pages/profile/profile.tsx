@@ -7,13 +7,18 @@ import commonStyles from '../common.module.css';
 import { ProfileUIProps } from './type';
 import { ProfileMenu } from '@components';
 
-export const ProfileUI: FC<ProfileUIProps> = ({
+export const ProfileUI: FC<
+  ProfileUIProps & {
+    passwordProps: { onFocus: () => void };
+  }
+> = ({
   formValue,
   isFormChanged,
   updateUserError,
   handleSubmit,
   handleCancel,
-  handleInputChange
+  handleInputChange,
+  passwordProps
 }) => (
   <main className={`${commonStyles.container}`}>
     <div className={`mt-30 mr-15 ${styles.menu}`}>
@@ -61,6 +66,7 @@ export const ProfileUI: FC<ProfileUIProps> = ({
             errorText={''}
             size={'default'}
             icon={'EditIcon'}
+            onFocus={passwordProps.onFocus}
           />
         </div>
         {isFormChanged && (

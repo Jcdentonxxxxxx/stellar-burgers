@@ -78,12 +78,14 @@ module.exports = {
       '@utils-types': path.resolve(__dirname, './src/utils/types'),
       '@api': path.resolve(__dirname, './src/utils/burger-api.ts'),
       '@slices': path.resolve(__dirname, './src/services/slices'),
-      '@selectors': path.resolve(__dirname, './src/services/selectors')
+      '@selectors': path.resolve(__dirname, './src/services/selectors'),
+      '@store': path.resolve(__dirname, './src/services/store.ts')
     }
   },
   output: {
     path: path.resolve(__dirname, './dist'),
-    filename: 'bundle.js'
+    filename: 'bundle.js',
+    publicPath: '/'
   },
   devServer: {
     static: path.join(__dirname, './dist'),
