@@ -2,18 +2,18 @@ import { test, expect } from '@playwright/test';
 
 test.describe('тестирование страницы конструктора', () => {
   test.beforeEach(async ({ page, context }) => {
-    await page.routeFromHAR('./tests/hars/ingredients.har', {
-      url: '**/ingredients',
-      update: false
-    });
     await context.addCookies([
       {
-        name: 'access_token',
+        name: 'accessToken',
         value: 'fake-token-xyz',
         domain: 'localhost',
         path: '/'
       }
     ]);
+    await page.routeFromHAR('./tests/hars/ingredients.har', {
+      url: '**/ingredients',
+      update: false
+    });
     await page.routeFromHAR('./tests/hars/user.har', {
       url: '**/auth/user',
       update: false
@@ -30,11 +30,6 @@ test.describe('тестирование страницы конструктор�
     test('проверка добавления ингредиентов в конструктор', async ({ page }) => {
       const bunText = 'Флюоресцентная булка R2-D3';
       const otherIngredientText = 'Биокотлета из марсианской Магнолии';
-
-      await page.routeFromHAR('./tests/hars/ingredients.har', {
-        url: '**/ingredients',
-        update: false
-      });
 
       await page.goto('/');
       const ingredients = page.getByTestId('ingredients');
@@ -111,9 +106,48 @@ test.describe('тестирование страницы конструктор�
     });
   });
 
-  // test.describe('Процесс создания заказа', () => {
-  //   test('', () => {
-  // getByRole('heading', { name: '108769' })
-  //   })
-  // })
+  test.describe('Процесс создания заказа', () => {
+    test('добавление ингредиентов, оформление заказа и очистка конструктора после заказа', async ({
+      page
+    }) => {
+      await page.routeFromHAR('./tests/hars/order.har', {
+        url: '**/orders',
+        update: false
+      });
+
+      await page
+        .getByRole('listitem')
+        .filter({ hasText: 'Флюоресцентная булка R2-D3' })
+        .getByRole('button')
+        .click();
+
+      await page
+        .getByRole('listitem')
+        .filter({ hasText: 'Сыр с астероидной плесенью' })
+        .getByRole('button')
+        .click();
+
+      await page.getByRole('button', { name: 'Оформить заказ' }).click();
+
+      await expect(page.getByTestId('modal')).toBeVisible();
+
+      await expect(
+        page.getByTestId('modal').getByText('идентификатор заказа')
+      ).toBeVisible();
+
+      await expect(
+        page.getByTestId('modal').getByRole('heading', { name: '108769' })
+      ).toBeVisible();
+
+      page.getByTestId('modal').getByTestId('close-modal-btn').click();
+
+      await expect(page.getByTestId('modal')).not.toBeVisible();
+
+      const constructor = page.getByTestId('constructor');
+
+      await expect(constructor.getByText('Выберите булки')).toHaveCount(2);
+
+      await expect(constructor.getByText('Выберите начинку')).toHaveCount(1);
+    });
+  });
 });
