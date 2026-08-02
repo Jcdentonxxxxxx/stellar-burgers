@@ -95,8 +95,10 @@
     "lint:fix": "npm run lint -- --fix",
     "format": "prettier ./src --write",
     "test-pt": "playwright test -c playwright.config.ts",
+    "test-pt:ui": "playwright test -c playwright.config.ts --ui",
     "test": "jest --verbose",
-    "test-cov": "jest --verbose --coverage"
+    "test:cov": "jest --verbose --coverage",
+    "test:all": "npm run test && npm run test-pt"
   },
   "eslintConfig": {
     "extends": [
