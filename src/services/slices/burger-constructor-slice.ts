@@ -1,7 +1,11 @@
 import { createSlice, PayloadAction, nanoid } from '@reduxjs/toolkit';
 import { TConstructorIngredient, TIngredient } from '@utils-types';
 
-interface IBurgerState {
+export const nanoidObj = {
+  nanoid
+};
+
+export interface IBurgerState {
   constructorItems: {
     bun: TConstructorIngredient | null;
     ingredients: TConstructorIngredient[];
@@ -31,7 +35,7 @@ export const burgerConstructorSlice = createSlice({
         }
       },
       prepare: (ingredient: TIngredient) => {
-        const id = nanoid();
+        const id = nanoidObj.nanoid();
         return { payload: { ...ingredient, id } };
       }
     },
@@ -50,6 +54,9 @@ export const burgerConstructorSlice = createSlice({
       const index = ingredients.findIndex(
         (ingredient) => ingredient.id === action.payload
       );
+      if (index === 0) {
+        return;
+      }
       [ingredients[index - 1], ingredients[index]] = [
         ingredients[index],
         ingredients[index - 1]
@@ -60,6 +67,9 @@ export const burgerConstructorSlice = createSlice({
       const index = ingredients.findIndex(
         (ingredient) => ingredient.id === action.payload
       );
+      if (index === ingredients.length - 1) {
+        return;
+      }
       [ingredients[index + 1], ingredients[index]] = [
         ingredients[index],
         ingredients[index + 1]
