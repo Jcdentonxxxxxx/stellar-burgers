@@ -2,6 +2,9 @@ import { test, expect } from '@playwright/test';
 
 test.describe('тестирование страницы конструктора', () => {
   test.beforeEach(async ({ page, context }) => {
+    await page.addInitScript(() => {
+      localStorage.setItem('refreshToken', 'fake-refresh-token');
+    });
     await context.addCookies([
       {
         name: 'accessToken',
@@ -116,12 +119,14 @@ test.describe('тестирование страницы конструктор�
       });
 
       await page
+        .getByTestId('ingredients')
         .getByRole('listitem')
         .filter({ hasText: 'Флюоресцентная булка R2-D3' })
         .getByRole('button')
         .click();
 
       await page
+        .getByTestId('ingredients')
         .getByRole('listitem')
         .filter({ hasText: 'Сыр с астероидной плесенью' })
         .getByRole('button')
@@ -139,7 +144,7 @@ test.describe('тестирование страницы конструктор�
         page.getByTestId('modal').getByRole('heading', { name: '108769' })
       ).toBeVisible();
 
-      page.getByTestId('modal').getByTestId('close-modal-btn').click();
+      await page.getByTestId('modal').getByTestId('close-modal-btn').click();
 
       await expect(page.getByTestId('modal')).not.toBeVisible();
 
